@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:experimental
 # Build Container
-FROM golang:1.17.3 as builder
+FROM golang:1.18 as builder
 
 ENV GO111MODULE on
 ENV GOPRIVATE=github.com/latonaio
@@ -17,12 +17,11 @@ RUN go build -o sap-api-integrations-warehouse-available-stock-reads-rmq-kube
 # Runtime Container
 FROM alpine:3.14
 RUN apk add --no-cache libc6-compat
-ENV SERVICE=sap-api-integrations-warehouse-resource-reads \
+ENV SERVICE=sap-api-integrations-warehouse-resource-reads-rmq-kube \
     APP_DIR="${AION_HOME}/${POSITION}/${SERVICE}"
 
 WORKDIR ${AION_HOME}
 
-COPY --from=builder /go/src/github.com/latonaio/sap-api-integrations-warehouse-resource-reads .
-COPY --from=builder /go/src/github.com/latonaio/sample.json .
+COPY --from=builder /go/src/github.com/latonaio/sap-api-integrations-warehouse-resource-reads-rmq-kube .
 
-CMD ["./sap-api-integrations-warehouse-resource-reads"]
+CMD ["./sap-api-integrations-warehouse-resource-reads-rmq-kube"]

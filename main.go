@@ -44,7 +44,7 @@ func main() {
 	}
 }
 
-func callWarehouseAvailableStock(caller *sap_api_caller.SAPAPICaller, msg rabbitmq.RabbitmqMessage) (err error) {
+func callProcess(caller *sap_api_caller.SAPAPICaller, msg rabbitmq.RabbitmqMessage) (err error) {
 	defer func() {
 		if e := recover(); e != nil {
 			err = xerrors.Errorf("error occurred: %w", e)
