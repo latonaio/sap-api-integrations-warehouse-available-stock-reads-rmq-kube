@@ -14,13 +14,14 @@ import (
 
 type RMQOutputter interface {
 	Send(sendQueue string, payload map[string]interface{}) error
+}
 
 type SAPAPICaller struct {
-	baseURL string
-	apiKey  string
+	baseURL      string
+	apiKey       string
 	outputQueues []string
 	outputter    RMQOutputter
-	log     *logger.Logger
+	log          *logger.Logger
 }
 
 func NewSAPAPICaller(baseUrl string, outputQueueTo []string, outputter RMQOutputter, l *logger.Logger) *SAPAPICaller {
